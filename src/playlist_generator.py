@@ -1,6 +1,6 @@
 import os
 from flask import Flask, session, redirect, url_for, request
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # AF 12/23/25 - Allows us to import variables from .env file
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
@@ -8,7 +8,7 @@ from spotipy.cache_handler import FlaskSessionCacheHandler
 load_dotenv()
 
 app = Flask(__name__) # AF 8/26/25 - Creating Flask session to hold our access token to interact with the Spotify API
-app.config['SECRET_KEY'] = os.getenv('FLASK_SC')
+app.config['SECRET_KEY'] = os.getenv('FLASK_SC') # AF 12/23/25 - Use secret key to encrypt session data  
 
 _client_id = os.getenv('CLIENT_ID')
 _client_secret = os.getenv('CLIENT_SECRET')
@@ -75,4 +75,3 @@ def logout():
 if __name__ == '__main__': 
     app.run(debug=True)
 
-# AF 8/26/25 - Start OAuth 

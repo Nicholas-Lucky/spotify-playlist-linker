@@ -1,0 +1,8 @@
+#styled-div {
+    width: 10%;
+    height: 10%;
+    background-color: lightblue;
+    
+    position: absolute;
+    left: 10%;
+}

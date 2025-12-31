@@ -1,5 +1,5 @@
 import os
-from flask import Flask, session, redirect, url_for, request
+from flask import Flask, session, redirect, url_for, request, render_template
 from dotenv import load_dotenv  # AF 12/23/25 - Allows us to import variables from .env file
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
@@ -39,11 +39,13 @@ sp = Spotify(auth_manager=oauth_manager)
 
 @app.route('/')
 def home():
-    # AF 8/27/25 - Checked if user is logged in/check if we have a token in the session that we can use to interact with API
-    if not oauth_manager.validate_token(_cache_handler.get_cached_token()):
-        auth_url = oauth_manager.get_authorize_url() # AF 8/27/25 - Get the URL to log in with Spotify
-        return redirect(auth_url)
-    return redirect(url_for('get_playlists'))
+    # NL 12/30/25 - This works on its own, although this does not use a separate HTML and CSS file
+    # styled_header ='<h1>A Mandarin Duck was here 👀🦆</h1>'
+    # return styled_header
+
+    # NL 12/30/25 - This works as well, where we have other HTML and CSS files being referenced
+    # NL 12/30/25 - It's worth noting, however, that it seems we need a templates folder for HTML files, and a static/styles folder for CSS and maybe JS files
+    return render_template('homepage_test.html')
 
 
 @app.route('/callback')

@@ -1,8 +1,19 @@
-#styled-div {
-    width: 10%;
-    height: 10%;
-    background-color: lightblue;
+.styled-div {
+    width: 20%;
+    height: 20%;
+    background-color: lightpink;
     
     position: absolute;
+}
+
+.styled-div:hover {
+    cursor: pointer;
+}
+
+#div-1 {
     left: 10%;
+}
+
+#div-2 {
+    left: 50%;
 }

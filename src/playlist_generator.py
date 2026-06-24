@@ -5,6 +5,13 @@ from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from spotipy.cache_handler import FlaskSessionCacheHandler
 
+# For security and safety purposes
+# from flask_talisman import Talisman
+# from flask_seasurf import SeaSurf
+
+# import sys
+# print(sys.executable)
+
 load_dotenv()
 
 app = Flask(__name__) # AF 8/26/25 - Creating Flask session to hold our access token to interact with the Spotify API
@@ -15,6 +22,9 @@ _client_secret = os.getenv('CLIENT_SECRET')
 _redirect_uri = os.getenv('REDIRECT_URI')
 _scope = 'playlist-read-private' # AF 8/26/25 - Permissions we want our app to access
 
+# For security and safety purposes
+# Talisman(app)
+# csrf = SeaSurf(app)
 
 #-------- OAUTH W/ Spotipy Wrapper --------#
 
@@ -45,7 +55,13 @@ def home():
 
     # NL 12/30/25 - This works as well, where we have other HTML and CSS files being referenced
     # NL 12/30/25 - It's worth noting, however, that it seems we need a templates folder for HTML files, and a static/styles folder for CSS and maybe JS files
-    return render_template('homepage_test.html')
+    # return render_template('homepage_test.html')
+
+    # # AF 8/27/25 - Checked if user is logged in/check if we have a token in the session that we can use to interact with API
+    if not oauth_manager.validate_token(_cache_handler.get_cached_token()):
+        auth_url = oauth_manager.get_authorize_url() # AF 8/27/25 - Get the URL to log in with Spotify
+        return redirect(auth_url)
+    return redirect(url_for('get_playlists'))
 
 
 @app.route('/callback')
